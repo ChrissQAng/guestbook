@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { readList, writeList } from "./filesystem.js";
+import { body, param, validationResult } from "express-validator";
 
 const app = express();
 app.use(cors());
@@ -21,31 +22,51 @@ app.get("/api/v1/guestbook", (_, res) => {
     );
 });
 
+// // Validation
+// when validation is implemented there are several faults shown in console
+
 // endpoint: POST
 
-app.post("/api/v1/guestbook", (req, res) => {
-  readList()
-    .then((list) => {
-      const idArray = list.map((item) => item.id);
-      const newId = Math.max(...idArray) + 1;
-      const newListItem = {
-        id: newId,
-        firstName: req.body.firstName,
-        name: req.body.name,
-        email: req.body.email,
-        message: req.body.message,
-      };
-      const newList = [...list, newListItem];
-      writeList(newList)
-        .then((newList) => res.status(200).json(newList))
-        .catch((err) =>
-          res
-            .status(500)
-            .json({ err, message: "Could not write new list entry" })
-        );
-    })
-    .catch((err) => console.log(err));
-});
+app.post(
+  "/api/v1/guestbook",
+  // validation
+  body("firstName").isString().notEmpty(),
+  body("name").isString().notEmpty(),
+  body("message").isString(),
+  body("email").isEmail(),
+  // val end
+  (req, res) => {
+    // validation
+    const validationErrors = validationResult(req);
+    if (!validationErrors.isEmpty()) {
+      return res
+        .status(400)
+        .json({ message: "Data not valid", errors: validationErrors.array() });
+    }
+    // val end
+    readList()
+      .then((list) => {
+        const idArray = list.map((item) => item.id);
+        const newId = Math.max(...idArray) + 1;
+        const newListItem = {
+          id: newId,
+          firstName: req.body.firstName,
+          name: req.body.name,
+          email: req.body.email,
+          message: req.body.message,
+        };
+        const newList = [...list, newListItem];
+        writeList(newList)
+          .then((newList) => res.status(200).json(newList))
+          .catch((err) =>
+            res
+              .status(500)
+              .json({ err, message: "Could not write new list entry" })
+          );
+      })
+      .catch((err) => console.log(err));
+  }
+);
 
 const PORT = 3004;
 app.listen(PORT, () => console.log("server ready at port:", PORT));

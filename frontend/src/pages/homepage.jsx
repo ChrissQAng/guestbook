@@ -19,6 +19,9 @@ const Homepage = () => {
 
   const addEntry = (event) => {
     event.preventDefault();
+    if (name.length <= 0 || firstName.length <= 0 || email.length <= 0) {
+      alert("Please fill in valid informations!");
+    }
     const newEntry = {
       firstName: firstName,
       name: name,
@@ -32,6 +35,10 @@ const Homepage = () => {
     })
       .then((res) => res.json())
       .then((data) => {
+        if (typeof data !== Array) {
+          console.log("No array - it´s an object!");
+          return;
+        }
         setCompleteGB(data);
       })
       .catch((err) => console.log(err));
@@ -63,6 +70,18 @@ const Homepage = () => {
         />
         <button onClick={addEntry}>SUBMIT</button>
       </form>
+      <section>
+        {completeGB.map((item, index) => (
+          <article key={index}>
+            <p>
+              <span>{item.firstName}</span> {item.email}
+            </p>
+            <p>writes:</p>
+
+            <p>{item.message}</p>
+          </article>
+        ))}
+      </section>
     </div>
   );
 };

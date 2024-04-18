@@ -22,3 +22,12 @@ button {
   font-size: 2rem;
   border-radius: 10px;
 }
+section {
+  margin-top: 6.25rem;
+}
+article {
+  margin-bottom: 3.125rem;
+}
+span {
+  font-weight: 700;
+}
