@@ -1,0 +1,24 @@
+.home {
+  padding: 6.25rem;
+  height: 100vh;
+}
+h1 {
+  margin-bottom: 18.75rem;
+  text-align: center;
+  font-size: 3.5rem;
+}
+form {
+  background-color: antiquewhite;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 6.25rem;
+  border: 3px solid black;
+}
+input,
+button {
+  font-size: 2rem;
+  border-radius: 10px;
+}
