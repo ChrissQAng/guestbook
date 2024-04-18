@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "firstName": "Christian",
+    "name": "Angerer",
+    "email": "test@test.com",
+    "message": "This is a nice hotel, but too cold!"
+  },
+  {
+    "id": 2,
+    "firstName": "Friedefrau",
+    "name": "Dreher",
+    "email": "friedef@test.com",
+    "message": "Friede says:This is a nice hotel, but too cold!"
+  },
+  {
+    "id": 1713430859639,
+    "firstName": "3Friedefrau",
+    "name": "3Dreher",
+    "email": "f3riedef@test.com",
+    "message": "Friede says:This is a nice hotel, but too cold!"
+  }
+]
